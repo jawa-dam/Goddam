@@ -1,0 +1,8 @@
+export const LEVEL4_MISSIONS=[
+{id:1,title:'Define the Question',phase:'INVESTIGATE',prompt:'Investigation begins by making the question precise enough to examine.',task:'Rewrite your strongest Level 2 question so another person could understand exactly what you are investigating.',xp:35},
+{id:2,title:'Gather the Evidence',phase:'INVESTIGATE',prompt:'Evidence gives an investigation something concrete to examine.',task:'List two observations, facts, measurements, or sources that could help answer your question.',xp:40},
+{id:3,title:'Separate Fact from Interpretation',phase:'INVESTIGATE',prompt:'Good investigators distinguish what they observed from what they think it means.',task:'Take one piece of evidence and label what is directly observed versus what is interpreted.',xp:50},
+{id:4,title:'Test the Explanation',phase:'INVESTIGATE',prompt:'A possible explanation becomes stronger when it survives meaningful tests.',task:'Describe one test, comparison, or check that could support or challenge your explanation.',xp:60},
+{id:5,title:'Look for What Could Disprove It',phase:'INVESTIGATE',prompt:'An investigator actively searches for evidence that could prove an idea wrong.',task:'Name one result that would make you reconsider your current explanation.',xp:70},
+{id:6,title:'Make the Evidence Speak',phase:'CREATE',prompt:'Investigation produces knowledge when evidence is connected carefully to a conclusion.',task:'State what your evidence supports, what remains uncertain, and what you would investigate next.',xp:85}
+];
