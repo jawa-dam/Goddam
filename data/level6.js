@@ -1,0 +1,8 @@
+export const LEVEL6_MISSIONS=[
+{id:1,title:'Frame the Problem',phase:'CREATE',prompt:'An architect begins by defining what is being built and why it matters.',task:'State the question, problem, or phenomenon your GEI investigation is trying to explain.',xp:50},
+{id:2,title:'Map the Evidence',phase:'CREATE',prompt:'A useful knowledge model connects observations, patterns, and evidence.',task:'Identify the strongest pieces of evidence from your investigation and explain how they connect.',xp:55},
+{id:3,title:'Design the Model',phase:'CREATE',prompt:'Now turn your evidence into a structured explanation that can be examined.',task:'Describe the main parts of your model and the relationship between them.',xp:60},
+{id:4,title:'Test the Architecture',phase:'INVESTIGATE',prompt:'A knowledge architecture becomes stronger when you deliberately search for failure points.',task:'Give one prediction your model makes and one observation that could challenge it.',xp:70},
+{id:5,title:'Revise the Blueprint',phase:'CREATE',prompt:'Discovery is iterative. New evidence can improve, limit, or replace a model.',task:'Identify one part of your model you would revise if new evidence required it.',xp:80},
+{id:6,title:'Create Knowledge',phase:'ARCHITECT',prompt:'You have observed, questioned, discovered, investigated, and modeled. Now communicate the knowledge you created.',task:'Write your GEI Architect statement: what you observed, what you discovered, what your model explains, what remains uncertain, and what you would investigate next.',xp:100}
+];
