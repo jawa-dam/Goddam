@@ -1,0 +1,1 @@
+export const REWARDS={observation:10,question:15,discovery:25,hypothesis:30,experiment:40,mission:50,connection:75,model:100,levelComplete:150};
