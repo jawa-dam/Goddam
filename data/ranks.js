@@ -1,0 +1,1 @@
+export const RANKS=[{name:"OBSERVER",minXP:0},{name:"QUESTIONER",minXP:250},{name:"PATTERN HUNTER",minXP:500},{name:"INVESTIGATOR",minXP:900},{name:"KNOWLEDGE ENGINEER",minXP:1500},{name:"GEI ARCHITECT",minXP:2500}];
