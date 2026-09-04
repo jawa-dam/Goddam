@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>GEI Academy | V6.71 Decision Outcome Decision Engine</title>
+  <link rel="stylesheet" href="../css/academy.css">
+  <style>
+    body{margin:0}.wrap{max-width:760px;margin:auto;padding:18px}.muted{color:var(--muted,#9aa4b2);font-size:.9rem}.card{border:1px solid var(--line,#273244);border-radius:14px;padding:14px;margin:12px 0;background:rgba(255,255,255,.025)}button{border:1px solid var(--line,#273244);border-radius:10px;padding:10px 14px;cursor:pointer}button.primary{margin-top:12px}textarea,select{width:100%;box-sizing:border-box;border:1px solid var(--line,#273244);border-radius:10px;background:transparent;color:inherit;padding:10px}nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}nav a{border:1px solid var(--line,#273244);padding:9px 12px;border-radius:10px;text-decoration:none;color:inherit}
+  </style>
+</head>
+<body>
+<main class="wrap">
+  <p class="muted">GEI RESEARCH ENGINE · V6.71</p>
+  <h1>🎯 Decision Outcome Decision Engine</h1>
+  <p>Now that I understand what this decision outcome means, <strong>what decision should I make next?</strong></p>
+
+  <section class="card">
+    <label for="artifact"><strong>Research Artifact</strong></label>
+    <select id="artifact"></select>
+    <div id="status" style="margin-top:12px"></div>
+  </section>
+
+  <section>
+    <h2>Ranked Next Decisions</h2>
+    <div id="decisionList"></div>
+  </section>
+
+  <section class="card">
+    <h2>Selected Decision</h2>
+    <p id="selectedDecision" class="muted">Select one of the ranked decisions above.</p>
+    <label for="note"><strong>Researcher Note</strong></label>
+    <textarea id="note" rows="4" placeholder="Optional reasoning or context for this decision..."></textarea>
+    <button id="save" class="primary" disabled>RECORD SELECTED DECISION</button>
+  </section>
+
+  <section>
+    <h2>Decision History</h2>
+    <div id="history"></div>
+  </section>
+
+  <section class="card">
+    <h2>Traceability</h2>
+    <p class="muted">V6.69 → V6.70 → V6.71</p>
+    <p class="muted">V6.71 reads the documented execution outcome and V6.70 interpretation, then applies a deterministic decision map. The researcher remains in control of the final decision.</p>
+  </section>
+
+  <section class="card">
+    <h2>Integrity Boundary</h2>
+    <p class="muted">This engine records and ranks researcher-facing process decisions. It does not establish scientific truth, causation, external validity, publication, peer review, acceptance, or real-world impact. Evidence remains researcher-provided and is not independently verified.</p>
+  </section>
+
+  <nav>
+    <a href="project-research-decision-outcome-intelligence-v670.html">← V6.70</a>
+    <a href="project-research-decision-outcome-orchestration-v672.html">V6.72 →</a>
+    <a href="../index.html">Control Room</a>
+  </nav>
+</main>
+<script type="module" src="../js/project-research-decision-outcome-decision-v671.js"></script>
+<script>
+document.addEventListener('click',e=>{if(e.target.matches('.choose'))document.getElementById('save').disabled=false});
+</script>
+</body>
+</html>
