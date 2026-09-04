@@ -1,0 +1,29 @@
+const arr=v=>Array.isArray(v)?v:[];
+const read=(k,d)=>{try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(d))}catch{return d}};
+const esc=v=>String(v??'').replace(/[&<>\"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[x]));
+const el=id=>document.getElementById(id);
+const INTEL='geiProjectResearchDecisionOutcomeIntelligenceV664',OUTCOME='geiProjectResearchDecisionExecutionOutcomeV663',KEY='geiProjectResearchDecisionOutcomeDecisionV665';
+const intelligence=arr(read(INTEL,[])),outcomes=arr(read(OUTCOME,[]));let records=arr(read(KEY,[]));
+const ids=[...new Set(intelligence.map(x=>x.artifactId).filter(Boolean))];let selected=ids[0];
+const MAP={
+'DECISION EXECUTION EFFECTIVE':[
+ {title:'ADVANCE TO VERIFICATION',priority:'NORMAL',score:90,route:'V6.24'},
+ {title:'PRESERVE THE DECISION OUTCOME RECORD',priority:'NORMAL',score:70,route:'V6.24'}],
+'DECISION EXECUTION PARTIALLY EFFECTIVE':[
+ {title:'REFINE AND RE-EXECUTE THE DECISION',priority:'HIGH',score:96,route:'V6.32'},
+ {title:'IDENTIFY THE REMAINING DECISION GAP',priority:'HIGH',score:84,route:'V6.31'}],
+'DECISION EFFECT UNCLEAR':[
+ {title:'REASSESS THE DECISION BASIS OR MEASUREMENT',priority:'HIGH',score:97,route:'V6.31'},
+ {title:'GATHER BETTER OBSERVATION EVIDENCE',priority:'HIGH',score:81,route:'V6.31'}],
+'DECISION EXECUTION INEFFECTIVE':[
+ {title:'CORRECT AND RE-PLAN THE DECISION',priority:'CRITICAL',score:100,route:'V6.31'},
+ {title:'PRESERVE THE FAILURE EVIDENCE',priority:'HIGH',score:86,route:'V6.31'}],
+'DECISION EXECUTION RESULT UNCERTAIN':[
+ {title:'GATHER MORE EVIDENCE',priority:'HIGH',score:98,route:'V6.31'},
+ {title:'DEFINE THE UNCERTAINTY',priority:'HIGH',score:83,route:'V6.31'}]};
+const rank={CRITICAL:4,HIGH:3,NORMAL:2,LOW:1};
+function by(a,id){return a.filter(x=>x.artifactId===id)}
+function latest(a){return a.slice().sort((x,y)=>new Date(y.createdAt||y.updatedAt||0)-new Date(x.createdAt||x.updatedAt||0))[0]}
+function save(d){const note=String(el('note').value||'').trim();const rec={id:crypto.randomUUID?.()||String(Date.now()),artifactId:selected,sourceIntelligenceId:d.source?.id||'',sourceOutcomeId:d.source?.sourceOutcomeId||'',decisionId:d.source?.decisionId||'',title:d.title,priority:d.priority,score:d.score,route:d.route,status:'SELECTED',note,createdAt:new Date().toISOString(),lineage:'V6.60 → V6.61 → V6.23 → V6.62 → V6.63 → V6.64 → V6.65'};records.push(rec);records=records.slice(-500);localStorage.setItem(KEY,JSON.stringify(records));render()}
+function render(){el('status').textContent=ids.length?'V6.65 ranks the next researcher-controlled decision from V6.64 outcome intelligence.':'No V6.64 intelligence found';el('selector').innerHTML=ids.length?'<select id="artifact">'+ids.map(x=>'<option value="'+esc(x)+'" '+(x===selected?'selected':'')+'>'+esc(x)+'</option>').join('')+'</select>':'<p class="hint">Record V6.64 outcome intelligence first.</p>';const s=document.getElementById('artifact');if(s)s.onchange=()=>{selected=s.value;render()};if(!selected){el('decisions').innerHTML='';return}const source=latest(by(intelligence,selected)),choices=source?(MAP[source.meaning]||[]).slice().sort((a,b)=>(rank[b.priority]||0)-(rank[a.priority]||0)||b.score-a.score):[];el('current').innerHTML=source?'<div class="item good"><span class="tag">'+esc(source.meaning)+'</span><h3>Next decision candidates</h3><p class="hint"><b>Strength:</b> '+esc(source.strength)+'<br><b>Recommended action:</b> '+esc(source.recommendedAction||'None')+'</p></div>':'<p class="hint">No current V6.64 interpretation available.</p>';el('decisions').innerHTML=choices.map((d,i)=>'<div class="item '+(i===0?'good':'')+'"><span class="tag">'+esc(d.priority)+' • SCORE '+d.score+'</span><h3>'+esc(d.title)+'</h3><p class="hint">Route: <b>'+esc(d.route)+'</b></p><button class="btn" data-id="'+i+'">🎯 SELECT THIS DECISION</button></div>').join('')||'<p class="hint">No decision candidates available.</p>';document.querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>{const d=choices[Number(b.dataset.id)];el('note').value='';el('selection').innerHTML='<div class="item good"><b>Selected:</b> '+esc(d.title)+'<br><span class="hint">Priority '+esc(d.priority)+' • Score '+d.score+' • Route '+esc(d.route)+'</span></div>';el('selection').dataset.choice=String(choices.indexOf(d))});el('selection').innerHTML='<p class="hint">Select a decision above.</p>';el('note').value='';el('trace').innerHTML=[['V6.64 Outcome Intelligence',by(intelligence,selected).length],['V6.63 Execution Outcomes',by(outcomes,selected).length],['V6.65 Selected Decisions',by(records,selected).length]].map(x=>'<div class="item '+(x[1]?'good':'warn')+'"><b>'+(x[1]?'✅':'⚠️')+' '+esc(x[0])+'</b><p class="hint">'+x[1]+' record(s).</p></div>').join('');const hist=by(records,selected).slice().reverse();el('history').innerHTML=hist.map(x=>'<div class="item"><span class="tag">'+esc(x.priority)+' • '+esc(x.status)+'</span><h3>'+esc(x.title)+'</h3><p class="hint">Score: '+esc(x.score)+' • Route: '+esc(x.route)+'<br><b>Note:</b> '+esc(x.note||'None')+'<br>'+new Date(x.createdAt||0).toLocaleString()+'</p></div>').join('')||'<p class="hint">No V6.65 decision history yet.</p>';el('integrity').innerHTML='<p class="hint">V6.65 is deterministic, local, and researcher-controlled. It ranks process decisions derived from documented V6.64 intelligence. It does not establish scientific truth, causation, external validity, publication, peer review, acceptance, or real-world impact. V6.66 will address decision orchestration.</p>';const c=document.getElementById('confirm');c.onclick=()=>{const i=Number(el('selection').dataset.choice);if(Number.isInteger(i)&&choices[i])save({source,title:choices[i].title,priority:choices[i].priority,score:choices[i].score,route:choices[i].route})}}
+render();
